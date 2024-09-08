@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PromoCodeFactory.Core.Abstractions.Repositories;
 using PromoCodeFactory.Core.Domain.Administration;
 using PromoCodeFactory.WebHost.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PromoCodeFactory.WebHost.Controllers
 {
     /// <summary>
-    /// Сотрудники
+    /// Контроллер сотрудников
     /// </summary>
     [ApiController]
     [Route("api/v1/[controller]")]
@@ -26,7 +26,6 @@ namespace PromoCodeFactory.WebHost.Controllers
         /// <summary>
         /// Получить данные всех сотрудников
         /// </summary>
-        /// <returns></returns>
         [HttpGet]
         public async Task<List<EmployeeShortResponse>> GetEmployeesAsync()
         {
@@ -46,7 +45,6 @@ namespace PromoCodeFactory.WebHost.Controllers
         /// <summary>
         /// Получить данные сотрудника по Id
         /// </summary>
-        /// <returns></returns>
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<EmployeeResponse>> GetEmployeeByIdAsync(Guid id)
         {
@@ -69,6 +67,46 @@ namespace PromoCodeFactory.WebHost.Controllers
             };
 
             return employeeModel;
+        }
+
+        /// <summary>
+        /// Сохранить нового сотрудника
+        /// </summary>
+        /// <param name="employeeRequest">Запрос</param>
+        /// <returns>ГУИД сотрудника</returns>
+        [HttpPost]
+        public async Task<ActionResult<Guid>> SaveEmployee([FromBody]EmployeeRequest employeeRequest)
+        {
+            var employee = new Employee()
+            {
+                FirstName = employeeRequest.FirstName,
+                LastName = employeeRequest.LastName,
+                Email = employeeRequest.Email
+            };
+
+            return Ok(await _employeeRepository.SaveAsync(employee));
+        }
+
+        /// <summary>
+        /// Удалить сотрудника
+        /// </summary>
+        /// <param name="id">Id</param>
+        [HttpDelete("{id:guid}")]
+        public async Task DeleteEmployee(Guid id)
+        {
+            await _employeeRepository.RemoveAsync(id);
+        }
+
+        /// <summary>
+        /// Обновить данные сотрудника
+        /// </summary>
+        /// <param name="id">Id</param>
+        /// <param name="employee">Сотрудник</param>
+        [HttpPut]
+        public async Task UpdateEmployee([FromHeader]Guid id, [FromBody]Employee employee)
+        {
+            employee.Id = id;
+            await _employeeRepository.UpdateAsync(employee);
         }
     }
 }
