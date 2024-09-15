@@ -1,4 +1,7 @@
-﻿namespace PromoCodeFactory.WebHost.Models
+﻿using PromoCodeFactory.Core.Domain.Administration;
+using System;
+
+namespace PromoCodeFactory.WebHost.Models
 {
     public class EmployeeRequest
     {
