@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using PromoCodeFactory.Core.Abstractions.Repositories;
 using PromoCodeFactory.Core.Domain.Administration;
 using PromoCodeFactory.Core.Domain.PromoCodeManagement;
+using PromoCodeFactory.DataAccess;
 using PromoCodeFactory.DataAccess.Data;
 using PromoCodeFactory.DataAccess.Repositories;
 
@@ -17,14 +18,13 @@ namespace PromoCodeFactory.WebHost
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddScoped(typeof(IRepository<Employee>), (x) =>
-                new InMemoryRepository<Employee>(FakeDataFactory.Employees));
-            services.AddScoped(typeof(IRepository<Role>), (x) =>
-                new InMemoryRepository<Role>(FakeDataFactory.Roles));
-            services.AddScoped(typeof(IRepository<Preference>), (x) =>
-                new InMemoryRepository<Preference>(FakeDataFactory.Preferences));
-            services.AddScoped(typeof(IRepository<Customer>), (x) =>
-                new InMemoryRepository<Customer>(FakeDataFactory.Customers));
+            services.ConfigureContext();
+            
+            services.AddScoped<IRepository<Employee>, EfRepository<Employee>>();
+            services.AddScoped<IRepository<Customer>, EfRepository<Customer>>();
+            services.AddScoped<IRepository<Role>, EfRepository<Role>>();
+            services.AddScoped<IRepository<Preference>, EfRepository<Preference>>();
+            services.AddScoped<IRepository<PromoCode>, EfRepository<PromoCode>>();
 
             services.AddOpenApiDocument(options =>
             {
