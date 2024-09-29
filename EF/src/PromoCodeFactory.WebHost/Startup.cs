@@ -26,6 +26,8 @@ namespace PromoCodeFactory.WebHost
             services.AddScoped<IRepository<Preference>, EfRepository<Preference>>();
             services.AddScoped<IRepository<PromoCode>, EfRepository<PromoCode>>();
 
+            services.AddAutoMapper(typeof(Program));
+
             services.AddOpenApiDocument(options =>
             {
                 options.Title = "PromoCode Factory API Doc";

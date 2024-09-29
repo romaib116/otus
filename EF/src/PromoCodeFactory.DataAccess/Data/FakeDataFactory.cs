@@ -77,7 +77,6 @@ namespace PromoCodeFactory.DataAccess.Data
                         Email = "ivan_sergeev@mail.ru",
                         FirstName = "Иван",
                         LastName = "Петров",
-                        //TODO: Добавить предзаполненный список предпочтений
                     }
                 };
 
