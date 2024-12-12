@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pcf.Administration.WebHost.Models;
 using Pcf.Administration.Core.Abstractions.Repositories;
 using Pcf.Administration.Core.Domain.Administration;
+using System.Threading;
 
 namespace Pcf.Administration.WebHost.Controllers
 {
@@ -64,8 +65,8 @@ namespace Pcf.Administration.WebHost.Controllers
                 Role = new RoleItemResponse()
                 {
                     Id = employee.Id,
-                    Name = employee.Role.Name,
-                    Description = employee.Role.Description
+                    Name = employee.Role?.Name,
+                    Description = employee.Role?.Description
                 },
                 FullName = employee.FullName,
                 AppliedPromocodesCount = employee.AppliedPromocodesCount
@@ -92,6 +93,19 @@ namespace Pcf.Administration.WebHost.Controllers
 
             await _employeeRepository.UpdateAsync(employee);
 
+            return Ok();
+        }
+
+        /// <summary>
+        /// Вставить сотрудника нового
+        /// </summary>
+        /// <param name="employee">Сотрудник</param>
+        /// <returns>Результат</returns>
+        [HttpPost]
+        public async Task<IActionResult> CreateEmployee(EmployeeRequest employee)
+        {
+            var employeeModel = new Employee() { FirstName = employee.FirstName, LastName = employee.LastName, Email = employee.Email };
+            await _employeeRepository.AddAsync(employeeModel);
             return Ok();
         }
     }
