@@ -37,6 +37,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pcf.ReceivingFromPartner.We
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pcf.Administration.IntegrationTests", "Pcf.Administration\Pcf.Administration.IntegrationTests\Pcf.Administration.IntegrationTests.csproj", "{38F1FFB6-5EBF-4EDF-B74E-AF29B0F1ABF7}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{56CF91C0-908B-4820-B97C-ECB3AB3D0E70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pcf.Contracts", "Pcf.Contracts\Pcf.Contracts.csproj", "{6C253F1D-46E6-4BF9-991E-AD8EDA54E317}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +103,14 @@ Global
 		{38F1FFB6-5EBF-4EDF-B74E-AF29B0F1ABF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38F1FFB6-5EBF-4EDF-B74E-AF29B0F1ABF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38F1FFB6-5EBF-4EDF-B74E-AF29B0F1ABF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56CF91C0-908B-4820-B97C-ECB3AB3D0E70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56CF91C0-908B-4820-B97C-ECB3AB3D0E70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56CF91C0-908B-4820-B97C-ECB3AB3D0E70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56CF91C0-908B-4820-B97C-ECB3AB3D0E70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C253F1D-46E6-4BF9-991E-AD8EDA54E317}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C253F1D-46E6-4BF9-991E-AD8EDA54E317}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C253F1D-46E6-4BF9-991E-AD8EDA54E317}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C253F1D-46E6-4BF9-991E-AD8EDA54E317}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

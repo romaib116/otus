@@ -1,4 +1,11 @@
 services:
+
+  promocode-factory-rabbitmq:
+    image: "rabbitmq:3.6-management-alpine"
+    ports:
+      - 5672:5672
+      - 15672:15672
+
   #Administration Db
   promocode-factory-administration-db:
     image: "postgres:latest"
@@ -11,7 +18,9 @@ services:
 
   #Administration Api
   promocode-factory-administration-api:
-    build: src/Pcf.Administration/
+    build:
+      context: Pcf.Administration/
+      dockerfile: Pcf.Administration.WebHost/Dockerfile
     container_name: 'promocode-factory-administration-api'
     restart: always
     ports:
@@ -34,17 +43,20 @@ services:
 
   #ReceivingFromPartner Api
   promocode-factory-receiving-from-partner-api:
-    build: src/Pcf.ReceivingFromPartner/
+    build:
+      context: Pcf.ReceivingFromPartner/
+      dockerfile: Pcf.ReceivingFromPartner.WebHost/Dockerfile
     container_name: 'promocode-factory-receiving-from-partner-api'
     restart: always
     ports:
       - "8092:8080"
     environment:
       - "ConnectionStrings:PromocodeFactoryReceivingFromPartnerDb=Host=promocode-factory-receiving-from-partner-db;Database=promocode_factory_receiving_from_partner_db;Username=postgres;Password=docker"
-      - "IntegrationSettings:GivingToCustomerApiUrl=http://promocode-factory-giving-to-customer-api"    
-      - "IntegrationSettings:AdministrationApiUrl=http://promocode-factory-administration-api"       
+      - "IntegrationSettings:GivingToCustomerApiUrl=http://promocode-factory-giving-to-customer-api:8080"    
+      - "IntegrationSettings:AdministrationApiUrl=http://promocode-factory-administration-api:8080"
     depends_on: 
       - promocode-factory-receiving-from-partner-db
+      - promocode-factory-rabbitmq
   
   #GivingToCustomer Db
   promocode-factory-giving-to-customer-db:
@@ -58,7 +70,9 @@ services:
 
   #GivingToCustomer Api
   promocode-factory-giving-to-customer-api:
-    build: src/Pcf.GivingToCustomer/
+    build:
+      context: Pcf.GivingToCustomer/
+      dockerfile: Pcf.GivingToCustomer.WebHost/Dockerfile
     container_name: 'promocode-factory-giving-to-customer-api'
     restart: always
     ports:
